@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.4583621709320402,
+        "y": 4.891266860329591
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.6528710037530616,
+        "y": 5.519089567002306
+      },
+      "isLocked": true,
+      "linkedName": "Reef Post 6R"
+    },
+    {
+      "anchor": {
+        "x": 1.2650385422095898,
+        "y": 7.121944744003197
+      },
+      "prevControl": {
+        "x": 2.0111741572919017,
+        "y": 6.5956883748124255
+      },
+      "nextControl": null,
+      "isLocked": true,
+      "linkedName": "Coral Station 1"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 35.60155183105559
+  },
+  "reversed": false,
+  "folder": "Return To Drop",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -59.99999999999999
+  },
+  "useDefaultConstraints": true
+}

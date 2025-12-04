@@ -1,0 +1,102 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.018578767123288,
+        "y": 5.174464897260274
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.002393702188223,
+        "y": 6.495730319338195
+      },
+      "isLocked": false,
+      "linkedName": "Reef Post 5L"
+    },
+    {
+      "anchor": {
+        "x": 1.2650385422095898,
+        "y": 7.121944744003197
+      },
+      "prevControl": {
+        "x": 2.191903825009044,
+        "y": 6.385210906351439
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Coral Station 1"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.9040590405904054,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 0.5,
+        "maxAcceleration": 2.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "Wrist Out",
+      "waypointRelativePos": 0.011705772425249167,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "SetWristSafePosition"
+        }
+      }
+    },
+    {
+      "name": "Zero Elevator",
+      "waypointRelativePos": 0.1627118644067797,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "E-Zero"
+        }
+      }
+    },
+    {
+      "name": "Run Coral Intake",
+      "waypointRelativePos": 0.5439939784053158,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "WE-CoralIntake"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 35.60155183105559
+  },
+  "reversed": false,
+  "folder": "Return To Drop",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -119.99999999999999
+  },
+  "useDefaultConstraints": true
+}

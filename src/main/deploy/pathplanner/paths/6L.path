@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.416439108446416,
+        "y": 5.615979597656133
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.655854359418693,
+        "y": 5.174328022732898
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.7299856860824883,
+        "y": 5.071526122959375
+      },
+      "prevControl": {
+        "x": 3.480861965352076,
+        "y": 5.511399955081193
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Reef Post 6L"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 0.6,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -60.61762504553408
+  },
+  "reversed": false,
+  "folder": "Sides",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -59.99999999999999
+  },
+  "useDefaultConstraints": false
+}
