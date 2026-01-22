@@ -286,8 +286,9 @@ public class Vision
                new Translation3d(Units.inchesToMeters(16), // Frontward from center
                                  Units.inchesToMeters(8), // Left from center
                                  Units.inchesToMeters(8)),// Up from center
-               VecBuilder.fill(4, 4, 8), VecBuilder.fill(0.5, 0.5, 1));
-
+               VecBuilder.fill(4, 4, 8), VecBuilder.fill(0.5, 0.5, 1)); //Only ctrl c+v after 2nd camera is in
+    
+    
     /**
      * Latency alert to use when high latency is detected.
      */
