@@ -1,6 +1,6 @@
 package frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj.Servo;
-import frc.robot.Constants;
+import frc.Constants;
 
 public class Shooter {
     Servo verticalActuator = new Servo(Constants.VERTICAL_ACTUATOR_PWM_CHANNEL);

@@ -1,4 +1,4 @@
-package frc.robot;
+package frc;
 
 import static edu.wpi.first.units.Units.MetersPerSecond;
 
@@ -6,6 +6,11 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.LinearVelocity;
 
 public class Constants {
+    // REFACTOR
+    public static final double XBOX_CONTROLLER_DEADBAND = 0.07;
+    public static final LinearVelocity SWERVE_MAXIMUM_SPEED = MetersPerSecond.of(8.0);
+    public static final double SWERVE_MAXIMUM_ANGULAR_VELOCITY = Units.degreesToRadians(720*2);
+    // END REFACTOR
     public static final LinearVelocity MAX_SPEED = MetersPerSecond.of(8.0);
     public static final Double MAX_ANGULAR_VELOCITY = Units.degreesToRadians(720*2);
     public static final double MAX_SPEED2 = Units.feetToMeters(14.5);

@@ -1,30 +1,22 @@
 package frc.robot.commands;
 
-import static edu.wpi.first.units.Units.MetersPerSecond;
 
 import java.util.function.BooleanSupplier;
 
 
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
-import frc.robot.subsystems.Bot.Swerve;
+import frc.subsystem.SwerveSubsystem;
 
 /** Command to pathfind to a prebuilt path and follow it */
 public class DriveToPath extends Command {
-  private final Swerve drive;
-  private final PathPlannerPath path;
   private Command pathFollowingCommand;
   // private final PathConstraints constraints;
   private final BooleanSupplier interupter;
 
   /** Creates a new DriveToPoint with a prebuilt path and default constraints */
-  public DriveToPath(Swerve drive, PathPlannerPath path) {
-    this.drive = drive;
-    this.path = path;
+  public DriveToPath(SwerveSubsystem drive, PathPlannerPath path) {
     this.interupter = null;
 
     if (path == null) {

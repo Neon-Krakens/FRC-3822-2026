@@ -10,37 +10,17 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.subsystems.Bot.Swerve;
+import frc.Constants;
+import frc.subsystem.SwerveSubsystem;
 import swervelib.SwerveInputStream;
-import frc.robot.Constants;
 
-/**
- * Main robot configuration class that binds controls and commands to
- * subsystems.
- * This class serves as the robot's command center, managing all subsystem
- * instances
- * and their associated commands.
- *
- * <p>
- * Features include:
- * <ul>
- * <li>Driver control configuration
- * <li>Command button mappings
- * <li>Autonomous command selection
- * <li>Subsystem instantiation and management
- * </ul>
- *
- * <p>
- * The class follows a centralized control pattern, with all robot behaviors
- * defined through command bindings and default commands.
- */
 public class RobotContainer {
 
   /** Xbox controller used for driver input. */
   private final CommandXboxController xboxController = new CommandXboxController(0);
   private final SendableChooser<String> autos = new SendableChooser<>();
   /** Main drive subsystem for robot movement. */
-  private final Swerve swerveDrive = Swerve.getInstance();
+  private final SwerveSubsystem swerveDrive = SwerveSubsystem.getInstance();
 
   /**
    * Input stream for swerve drive control.
@@ -76,17 +56,13 @@ public class RobotContainer {
     autos.setDefaultOption("Middle", "MID");
     autos.addOption("Right2", "RIGHT2");
 
-    // Add the chooser to Shuffleboard
     SmartDashboard.putData("Auto Chooser", autos);
-
     CommandScheduler.getInstance().onCommandInitialize(command -> {
       System.out.println("Command Started: " + command.getName());
     });
-
     CommandScheduler.getInstance().onCommandInterrupt(command -> {
       System.out.println("Command Interrupted: " + command.getName());
     });
-
     CommandScheduler.getInstance().onCommandFinish(command -> {
       System.out.println("Command Finished: " + command.getName());
     });
