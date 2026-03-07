@@ -8,6 +8,7 @@ import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.FeedForwardConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -35,11 +36,13 @@ public class Intake {
             .smartCurrentLimit(40);
 
 
+        config.closedLoop.feedForward
+            .kV(0.0);
+
         config.closedLoop
             .p(0.1)
             .i(0.0)
             .d(0.0)
-            .velocityFF(0.0)
             .outputRange(-0.5,0.5);
 
         rotationMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters); 
@@ -47,8 +50,8 @@ public class Intake {
         rotationMotorEncoder.setPosition(90.0);
 
         NamedCommands.registerCommand("GoToZero",
-            Commands.runOnce(() -> rotationMotorController.setReference(0.0, SparkMax.ControlType.kPosition)));
+            Commands.runOnce(() -> rotationMotorController.setSetpoint(0.0, SparkMax.ControlType.kPosition)));
         NamedCommands.registerCommand("GoTo90",
-            Commands.runOnce(() -> rotationMotorController.setReference(90.0, SparkMax.ControlType.kPosition)));
+            Commands.runOnce(() -> rotationMotorController.setSetpoint(90.0, SparkMax.ControlType.kPosition)));
     }
 }
