@@ -43,18 +43,18 @@ public class SwerveSubsystem extends SubsystemBase {
     private static SwerveSubsystem instance;
 
     // Path Planning Paths
-    public PathPlannerPath Z1R = loadIndividualPath("1R");
-    public PathPlannerPath Z1L = loadIndividualPath("1L");
-    public PathPlannerPath Z2R = loadIndividualPath("2R");
-    public PathPlannerPath Z2L = loadIndividualPath("2L");
-    public PathPlannerPath Z3R = loadIndividualPath("3R");
-    public PathPlannerPath Z3L = loadIndividualPath("3L");
-    public PathPlannerPath Z4R = loadIndividualPath("4R");
-    public PathPlannerPath Z4L = loadIndividualPath("4L");
-    public PathPlannerPath Z5R = loadIndividualPath("5R");
-    public PathPlannerPath Z5L = loadIndividualPath("5L");
-    public PathPlannerPath Z6R = loadIndividualPath("6R");
-    public PathPlannerPath Z6L = loadIndividualPath("6L");
+    public PathPlannerPath  Z1R = loadIndividualPath("1R"),
+                            Z1L = loadIndividualPath("1L"),
+                            Z2R = loadIndividualPath("2R"),
+                            Z2L = loadIndividualPath("2L"),
+                            Z3R = loadIndividualPath("3R"),
+                            Z3L = loadIndividualPath("3L"),
+                            Z4R = loadIndividualPath("4R"),
+                            Z4L = loadIndividualPath("4L"),
+                            Z5R = loadIndividualPath("5R"),
+                            Z5L = loadIndividualPath("5L"),
+                            Z6R = loadIndividualPath("6R"),
+                            Z6L = loadIndividualPath("6L");
 
     public SwerveSubsystem() {
         try {
@@ -66,7 +66,7 @@ public class SwerveSubsystem extends SubsystemBase {
             throw new RuntimeException("Failed to create swerve drive ", e);
         }
 
-        SwerveDriveTelemetry.verbosity = TelemetryVerbosity.NONE;
+        SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
         swerveDrive.setHeadingCorrection(false);
         swerveDrive.setAngularVelocityCompensation(
             true, 
@@ -75,7 +75,7 @@ public class SwerveSubsystem extends SubsystemBase {
             );
         swerveDrive.setCosineCompensator(!SwerveDriveTelemetry.isSimulation);
         swerveDrive.setModuleEncoderAutoSynchronize(true, 1);
-        //swerveDrive.pushOffsetsToEncoders();
+        swerveDrive.pushOffsetsToEncoders();
         swerveDrive.setMaximumAllowableSpeeds(Constants.SWERVE_MAXIMUM_SPEED.in(MetersPerSecond), Constants.SWERVE_MAXIMUM_ANGULAR_VELOCITY);
         
     }
