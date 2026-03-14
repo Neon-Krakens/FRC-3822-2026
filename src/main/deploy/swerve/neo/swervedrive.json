@@ -1,13 +1,3 @@
-
-import java.io.File;
-import edu.wpi.first.wpilibj.Filesystem;
-import swervelib.parser.SwerveParser;
-import swervelib.SwerveDrive;
-import edu.wpi.first.math.util.Units;
-
-SwerveDrive swerveDrive=new SwerveParser(new File(Filesystem.getDeployDirectory(),"swerve")).createSwerveDrive(Units.feetToMeters(14.5));
-
-
 {
   "imu": {
     "type": "navx",
