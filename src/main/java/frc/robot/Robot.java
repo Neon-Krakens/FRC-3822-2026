@@ -161,7 +161,7 @@ public class Robot extends TimedRobot
     }
     else intake.set(0);
 
-    if(controller.getLeftBumperButton()){
+    if(controller.getRightBumperButton()){
       shooter1.set(100);
       shooter2.set(-100);
       feeder_agitator.set(-100);
@@ -177,14 +177,14 @@ public class Robot extends TimedRobot
     if(controller.getXButton()||controller.getBButton()){
       int speed = 10;
       if(controller.getXButton()) speed = -speed;
-      else turret.set(speed);
+      turret.set(speed);
     }
     else  turret.set(0);
 
     if(controller.getYButton()||controller.getAButton()){
-      int speed = 10;
+      int speed = 100;
       if(controller.getYButton()) speed = -speed;
-      else arm_joint.set(speed);
+      arm_joint.set(speed);
     }
     else  arm_joint.set(0);
     
