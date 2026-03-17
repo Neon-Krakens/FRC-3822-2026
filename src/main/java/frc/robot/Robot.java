@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
+import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to each mode, as
  * described in the TimedRobot documentation. If you change the name of this class or the package after creating this
@@ -70,6 +72,41 @@ public class Robot extends TimedRobot
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+
+    final double latency = .5; //seconds from signal to shoot to exit of ball. Probably this whole section of code should be run once to move motors and a second time after to see if correct, or if further adjustments are needed
+
+    //robot pos
+    double r = m_robotContainer.drivebase.swerveDrive.getPose().getRotation().getRadians();
+    double xv = m_robotContainer.drivebase.swerveDrive.getRobotVelocity().vxMetersPerSecond; //TODO: is affected by angular velocity
+    double yv = m_robotContainer.drivebase.swerveDrive.getRobotVelocity().vxMetersPerSecond;
+    double xp = m_robotContainer.drivebase.swerveDrive.getPose().getX()+0.19685*Math.cos(r)+latency*xv; //TODO: check if this rotates correctly
+    double yp = m_robotContainer.drivebase.swerveDrive.getPose().getY()+0.19685*Math.sin(r)+latency*yv;
+
+    System.out.println("Pose: xp: " + xp + ", yp: " + yp + ", xv:" + xv + ", yv: " + yv);
+    
+    // position on field, 4.62534 meters X, 4.03479 meters Y
+    final double target_x = 4.62534;
+    final double target_y = 4.03479;
+
+    //global shooting velocities
+    final double target_height = 1.8288;
+    final double edge_height = target_height + .3;
+    double target_distance = Math.sqrt((target_x-xp)*(target_x-xp)+(target_y-yp)*(target_y-yp));
+    double edge_distance = target_distance-.6;
+    double x_velocity = Math.sqrt(4.9*target_distance*edge_distance*(target_distance - edge_distance)/(edge_height*target_distance - edge_distance*target_height));
+    double z_velocity = x_velocity*target_height/target_distance + 4.9*target_distance/x_velocity;
+    
+    //local shooting velocities
+    double x_target_dir = (target_x - xp)/target_distance;
+    double y_target_dir = (target_y - yp)/target_distance;
+    double x_rel_velocity = x_target_dir * x_velocity - xv;
+    double y_rel_velocity = y_target_dir * x_velocity - yv;
+    double shooting_vel_xy = Math.sqrt(x_rel_velocity*x_rel_velocity + y_rel_velocity*y_rel_velocity);
+    double shooting_dir_horiz = Math.atan2(y_rel_velocity, x_rel_velocity);
+    double shooting_dir_virt = Math.atan2(z_velocity, shooting_vel_xy);
+    double shooting_speed = Math.sqrt(shooting_vel_xy*shooting_vel_xy + z_velocity*z_velocity);
+
+    System.out.println("Targeting: shooting_speed: " + shooting_speed + ", shooting_dir_horiz: " + shooting_dir_horiz + ", shooting_dir_virt:" + shooting_dir_virt);
   }
 
   /**
