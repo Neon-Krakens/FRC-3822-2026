@@ -4,9 +4,13 @@
 
 package frc.robot;
 
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -24,6 +28,15 @@ public class Robot extends TimedRobot
   private RobotContainer m_robotContainer;
 
   private Timer disabledTimer;
+   XboxController controller = new XboxController(0);
+   private SparkMax arm_joint = new SparkMax(29, MotorType.kBrushless);
+  private SparkMax intake = new SparkMax(10, MotorType.kBrushless);
+  private SparkMax turret = new SparkMax(11, MotorType.kBrushless);
+  private SparkMax shooter1 = new SparkMax(12, MotorType.kBrushless);
+  private SparkMax shooter2 = new SparkMax(13, MotorType.kBrushless);
+  private SparkMax feeder_agitator = new SparkMax(15, MotorType.kBrushless);
+  private SparkMax feeder_wheels = new SparkMax(14, MotorType.kBrushless);
+
 
   public Robot()
   {
@@ -143,6 +156,38 @@ public class Robot extends TimedRobot
   @Override
   public void teleopPeriodic()
   {
+    if(controller.getLeftBumperButton()){
+      intake.set(-100);
+    }
+    else intake.set(0);
+
+    if(controller.getLeftBumperButton()){
+      shooter1.set(100);
+      shooter2.set(-100);
+      feeder_agitator.set(-100);
+      feeder_wheels.set(-100);
+    }
+    else{
+      shooter1.set(0);
+      shooter2.set(0);
+      feeder_agitator.set(0);
+      feeder_wheels.set(0);
+    }
+
+    if(controller.getXButton()||controller.getBButton()){
+      int speed = 10;
+      if(controller.getXButton()) speed = -speed;
+      else turret.set(speed);
+    }
+    else  turret.set(0);
+
+    if(controller.getYButton()||controller.getAButton()){
+      int speed = 10;
+      if(controller.getYButton()) speed = -speed;
+      else arm_joint.set(speed);
+    }
+    else  arm_joint.set(0);
+    
   }
 
   @Override
