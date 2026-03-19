@@ -80,8 +80,8 @@ public class Robot extends TimedRobot
     double yv = m_robotContainer.drivebase.swerveDrive.getRobotVelocity().vyMetersPerSecond;
     double xp = m_robotContainer.drivebase.swerveDrive.getPose().getX()+0.19685*Math.cos(r+latency*rv)+latency*xv; //TODO: check if this rotates correctly
     double yp = m_robotContainer.drivebase.swerveDrive.getPose().getY()+0.19685*Math.sin(r+latency*rv)+latency*yv;
-    xv += -rv*Math.sin(r+latency*rv); //add on velocity from angular velocity
-    yv += rv*Math.cos(r+latency*rv);
+    xv += -0.19685*rv*Math.sin(r+latency*rv); //add on velocity from angular velocity
+    yv += 0.19685*rv*Math.cos(r+latency*rv);
 
     System.out.println("Pose: xp: " + xp + ", yp: " + yp + ", xv:" + xv + ", yv: " + yv);
     
