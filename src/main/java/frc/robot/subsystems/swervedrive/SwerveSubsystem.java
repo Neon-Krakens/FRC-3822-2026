@@ -49,9 +49,19 @@ import swervelib.parser.SwerveDriveConfiguration;
 import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
+import frc.robot.subsystems.swervedrive.Vision;
 
 public class SwerveSubsystem extends SubsystemBase
 {
+  /**
+   * Enable vision odometry updates while driving.
+   */
+  private final boolean visionDriveTest = true;
+  /**
+   * PhotonVision class to keep an accurate odometry.
+   */
+  private Vision vision;
+  
   /**
    * Swerve drive object.
    */
@@ -90,8 +100,22 @@ public class SwerveSubsystem extends SubsystemBase
     swerveDrive.setModuleEncoderAutoSynchronize(false,
                                                 1); // Enable if you want to resynchronize your absolute encoders and motor encoders periodically when they are not moving.
     // swerveDrive.pushOffsetsToEncoders(); // Set the absolute encoder to be used over the internal encoder and push the offsets onto it. Throws warning if not possible
-
+    
+    if (visionDriveTest) {
+      setupPhotonVision();
+      // Stop the odometry thread if we are using vision that way we can synchronize
+      // updates better.
+      // swerveDrive.stopOdometryThread();
+    }
     setupPathPlanner();
+  }
+
+  /**
+   * Setup the photon vision class.
+   */
+  public void setupPhotonVision() {
+    System.out.println("Setting Up Photon Vision");
+    vision = new Vision(swerveDrive::getPose, swerveDrive.field);
   }
 
   /**
@@ -112,6 +136,13 @@ public class SwerveSubsystem extends SubsystemBase
   @Override
   public void periodic()
   {
+    // When vision is enabled we must manually update odometry in SwerveDrive
+    if (visionDriveTest) {
+        swerveDrive.updateOdometry();
+        vision.updatePoseEstimation(swerveDrive);
+        vision.updateVisionField();
+        SmartDashboard.putNumber("GYRO", swerveDrive.getYaw().getDegrees());
+    }
   }
 
   @Override
