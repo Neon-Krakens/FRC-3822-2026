@@ -78,7 +78,7 @@ public class Robot extends TimedRobot
     //robot pos
     double r = m_robotContainer.drivebase.swerveDrive.getPose().getRotation().getRadians();
     double xv = m_robotContainer.drivebase.swerveDrive.getRobotVelocity().vxMetersPerSecond; //TODO: is affected by angular velocity
-    double yv = m_robotContainer.drivebase.swerveDrive.getRobotVelocity().vxMetersPerSecond;
+    double yv = m_robotContainer.drivebase.swerveDrive.getRobotVelocity().vyMetersPerSecond;
     double xp = m_robotContainer.drivebase.swerveDrive.getPose().getX()+0.19685*Math.cos(r)+latency*xv; //TODO: check if this rotates correctly
     double yp = m_robotContainer.drivebase.swerveDrive.getPose().getY()+0.19685*Math.sin(r)+latency*yv;
 
