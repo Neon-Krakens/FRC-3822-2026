@@ -10,8 +10,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
-import frc.robot.subsystems.swervedrive.SwerveSubsystem;
-
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to each mode, as
  * described in the TimedRobot documentation. If you change the name of this class or the package after creating this
@@ -75,12 +73,15 @@ public class Robot extends TimedRobot
 
     final double latency = .5; //seconds from signal to shoot to exit of ball. Probably this whole section of code should be run once to move motors and a second time after to see if correct, or if further adjustments are needed
 
-    //robot pos
+    //robot pos, assumes rotational and angular velocity remains constant
     double r = m_robotContainer.drivebase.swerveDrive.getPose().getRotation().getRadians();
-    double xv = m_robotContainer.drivebase.swerveDrive.getRobotVelocity().vxMetersPerSecond; //TODO: is affected by angular velocity
+    double rv = m_robotContainer.drivebase.swerveDrive.getRobotVelocity().omegaRadiansPerSecond;
+    double xv = m_robotContainer.drivebase.swerveDrive.getRobotVelocity().vxMetersPerSecond;
     double yv = m_robotContainer.drivebase.swerveDrive.getRobotVelocity().vyMetersPerSecond;
-    double xp = m_robotContainer.drivebase.swerveDrive.getPose().getX()+0.19685*Math.cos(r)+latency*xv; //TODO: check if this rotates correctly
-    double yp = m_robotContainer.drivebase.swerveDrive.getPose().getY()+0.19685*Math.sin(r)+latency*yv;
+    double xp = m_robotContainer.drivebase.swerveDrive.getPose().getX()+0.19685*Math.cos(r+latency*rv)+latency*xv; //TODO: check if this rotates correctly
+    double yp = m_robotContainer.drivebase.swerveDrive.getPose().getY()+0.19685*Math.sin(r+latency*rv)+latency*yv;
+    xv += -rv*Math.sin(r+latency*rv); //add on velocity from angular velocity
+    yv += rv*Math.cos(r+latency*rv);
 
     System.out.println("Pose: xp: " + xp + ", yp: " + yp + ", xv:" + xv + ", yv: " + yv);
     
