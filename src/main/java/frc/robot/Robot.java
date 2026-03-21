@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -94,8 +95,14 @@ public class Robot extends TimedRobot
     System.out.println("Pose: xp: " + xp + ", yp: " + yp + ", xv:" + xv + ", yv: " + yv);
     
     // position on field, 4.62534 meters X, 4.03479 meters Y
-    final double target_x = 4.62534;
+    Optional<Alliance> alliance = DriverStation.getAlliance()
+    if (alliance.isPresent() && alliance.get() == Alliance.red()) {
+      final double target_x = 11.91466;
+    } else {
+      final double target_x = 4.62534;
+    }
     final double target_y = 4.03479;
+
 
     //shooting velocities
     final double target_height = 1.8288;
