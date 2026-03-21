@@ -120,7 +120,7 @@ public class Robot extends TimedRobot
     double edge_time = edge_distance/hv;
     double height_at_edge = slope*h_v_rel*edge_time-4.9*edge_time*edge_time;
     if(height_at_edge < edge_height) {
-      System.out.println("too far! " + (height_at_edge - edge_height) + " M under edge");
+      System.out.println("too close! " + (height_at_edge - edge_height) + " M under edge");
     } else {
       System.out.println("Targeting: shooting_velocity: " + velocity + ", shooting_dir: " + shooting_dir + ", " + (height_at_edge - edge_height) + " M over edge");
     }
