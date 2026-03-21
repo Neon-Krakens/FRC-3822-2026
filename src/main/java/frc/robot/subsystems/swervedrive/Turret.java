@@ -17,8 +17,8 @@ public class Turret extends SubsystemBase
     private final RelativeEncoder turretEncoder = turret.getEncoder();
 
     //TEMP LIMITS. SUBJECT TO CHANGE AFTER TESTING
-    private static final double MIN_TURRET_POSITION = -20.0;
-    private static final double MAX_TURRET_POSITION = 10.0;
+    private static final double MIN_TURRET_POSITION = -.056;
+    private static final double MAX_TURRET_POSITION = .028;
 
     //PID for aiming
     private final PIDController aimPID = new PIDController(0.02, 0.0, 0.0);
@@ -46,7 +46,7 @@ public class Turret extends SubsystemBase
             return;
         }
         
-        turret.set(MathUtil.clamp(power, -0.35, 0.35));
+        turret.set(MathUtil.clamp(power, -0.35, 0.35)); //TODO: evaluate clamp
     }
 
     public void stopTurret()

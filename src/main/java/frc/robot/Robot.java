@@ -124,9 +124,8 @@ public class Robot extends TimedRobot
       System.out.println("too close! " + (height_at_edge - edge_height) + " M under edge");
     } else {
       System.out.println("Targeting: shooting_velocity: " + velocity + ", shooting_dir: " + shooting_dir + ", " + (height_at_edge - edge_height) + " M over edge");
-      m_robotContainer.turret.aimAtTarget(shooting_dir);
     }
-
+    m_robotContainer.turret.aimAtTarget(shooting_dir); //aimAtTarget neds to be called periodically or it could probably exceed limits!
 
 
   }
