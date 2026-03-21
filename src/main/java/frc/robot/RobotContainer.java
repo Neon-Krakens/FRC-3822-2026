@@ -38,9 +38,6 @@ public class RobotContainer
     //The robot's subsystems and commands are defined here...
     public final SwerveSubsystem drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve/neo"));
 
-    //If anything goes wrong delete line 36
-    private final Vision vision = new Vision(drivebase::getPose, drivebase.getSwerveDrive().field);
-
     //Created a shooter
     Shooter shooter = new Shooter();
 

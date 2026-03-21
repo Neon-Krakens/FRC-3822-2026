@@ -11,7 +11,7 @@ import com.revrobotics.RelativeEncoder;
 public class Turret extends SubsystemBase
 {
     //Motor
-    SparkMax turret = new SparkMax(11, MotorType.kBrushless);
+    private final SparkMax turret = new SparkMax(11, MotorType.kBrushless);
 
     //Encoder
     private final RelativeEncoder turretEncoder = turret.getEncoder();
