@@ -62,6 +62,13 @@ public class Robot extends TimedRobot
    * <p>This runs after the mode specific periodic functions, but before LiveWindow and
    * SmartDashboard integrated updating.
    */
+
+  private static double height_error(double hv, double xv, double yv,  double target_distance, double target_height, double x_target_dir, double y_target_dir, double slope) {
+    double x_v_rel = hv * x_target_dir - xv;
+    double y_v_rel = hv * y_target_dir - yv;
+    return slope * Math.sqrt(x_v_rel * x_v_rel + y_v_rel * y_v_rel) * target_distance / hv - 4.9*target_distance*target_distance/(hv*hv) - target_height;
+  }
+
   @Override
   public void robotPeriodic()
   {
@@ -72,6 +79,7 @@ public class Robot extends TimedRobot
     CommandScheduler.getInstance().run();
 
     final double latency = .5; //seconds from signal to shoot to exit of ball. Probably this whole section of code should be run once to move motors and a second time after to see if correct, or if further adjustments are needed
+    final double slope = 2.747; //tan(shooting angle)
 
     //robot pos, assumes rotational and angular velocity remains constant
     double r = m_robotContainer.drivebase.swerveDrive.getPose().getRotation().getRadians();
@@ -89,25 +97,36 @@ public class Robot extends TimedRobot
     final double target_x = 4.62534;
     final double target_y = 4.03479;
 
-    //global shooting velocities
+    //shooting velocities
     final double target_height = 1.8288;
-    final double edge_height = target_height + .3;
     double target_distance = Math.sqrt((target_x-xp)*(target_x-xp)+(target_y-yp)*(target_y-yp));
-    double edge_distance = target_distance-.6;
-    double x_velocity = Math.sqrt(4.9*target_distance*edge_distance*(target_distance - edge_distance)/(edge_height*target_distance - edge_distance*target_height));
-    double z_velocity = x_velocity*target_height/target_distance + 4.9*target_distance/x_velocity;
-    
-    //local shooting velocities
     double x_target_dir = (target_x - xp)/target_distance;
     double y_target_dir = (target_y - yp)/target_distance;
-    double x_rel_velocity = x_target_dir * x_velocity - xv;
-    double y_rel_velocity = y_target_dir * x_velocity - yv;
-    double shooting_vel_xy = Math.sqrt(x_rel_velocity*x_rel_velocity + y_rel_velocity*y_rel_velocity);
-    double shooting_dir_horiz = Math.atan2(y_rel_velocity, x_rel_velocity);
-    double shooting_dir_virt = Math.atan2(z_velocity, shooting_vel_xy);
-    double shooting_speed = Math.sqrt(shooting_vel_xy*shooting_vel_xy + z_velocity*z_velocity);
+    double hv = .1;
+    for(int c=0; c<16; c++) {
+      double value = height_error(hv, xv, yv, target_distance, target_height, x_target_dir, y_target_dir, slope);
+      double increment = height_error(hv+.01, xv, yv, target_distance, target_height, x_target_dir, y_target_dir, slope);
+      hv += -.01*value / (increment - value);
+    }
+    double x_v_rel = hv * x_target_dir - xv;
+    double y_v_rel = hv * y_target_dir - yv;
+    double h_v_rel = Math.sqrt(x_v_rel*x_v_rel + y_v_rel*y_v_rel);
+    double velocity = Math.sqrt(h_v_rel*h_v_rel + slope*slope*h_v_rel*h_v_rel);
+    double shooting_dir = Math.atan2(y_v_rel, h_v_rel);
 
-    System.out.println("Targeting: shooting_speed: " + shooting_speed + ", shooting_dir_horiz: " + shooting_dir_horiz + ", shooting_dir_virt:" + shooting_dir_virt);
+    //verification
+    final double edge_height = target_height + .3;
+    double edge_distance = target_distance-.6;
+    double edge_time = edge_distance/hv;
+    double height_at_edge = slope*h_v_rel*edge_time-4.9*edge_time*edge_time;
+    if(height_at_edge < edge_height) {
+      System.out.println("too far! " + (height_at_edge - edge_height) + " M under edge");
+    } else {
+      System.out.println("Targeting: shooting_velocity: " + velocity + ", shooting_dir: " + shooting_dir + ", " + (height_at_edge - edge_height) + " M over edge");
+    }
+
+
+
   }
 
   /**
