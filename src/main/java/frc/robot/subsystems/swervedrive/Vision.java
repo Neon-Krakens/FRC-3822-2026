@@ -1,8 +1,6 @@
 package frc.robot.subsystems.swervedrive;
-
 import static edu.wpi.first.units.Units.Microseconds;
 import static edu.wpi.first.units.Units.Seconds;
-
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
@@ -42,6 +40,7 @@ import swervelib.SwerveDrive;
 import swervelib.telemetry.SwerveDriveTelemetry;
 
 // https://github.com/Yet-Another-Software-Suite/YAGSL/blob/main/examples/drivebase_with_PhotonVision/src/main/java/frc/robot/subsystems/swervedrive/Vision.java
+
 /**
  * Example PhotonVision class to aid in the pursuit of accurate odometry. Taken from
  * https://gitlab.com/ironclad_code/ironclad-2024/-/blob/master/src/main/java/frc/robot/vision/Vision.java?ref_type=heads
@@ -331,6 +330,22 @@ public class Vision
     field2d.getObject("tracked targets").setPoses(poses);
   }
 
+  //In the case that any of this goes wrong delete line 333-346
+    public boolean hasTarget()
+  {
+    return Cameras.CENTER_CAM.getLatestResult()
+        .map(PhotonPipelineResult::hasTargets)
+        .orElse(false);
+  }
+
+  public double getTargetYaw()
+  {
+    return Cameras.CENTER_CAM.getLatestResult()
+        .filter(PhotonPipelineResult::hasTargets)
+        .map(result -> result.getBestTarget().getYaw())
+        .orElse(0.0);
+  }
+
   /**
    * Camera Enum to select each camera
    */
@@ -341,7 +356,7 @@ public class Vision
      */
     BACK_CAM("Back_Camera",
              new Rotation3d(0, 0, 0),
-             new Translation3d(Units.inchesToMeters(-13.75), // TODO: specify
+             new Translation3d(Units.inchesToMeters(-13.75),
                                Units.inchesToMeters(-4.75),
                                Units.inchesToMeters(14.187)),
              VecBuilder.fill(4, 4, 8), VecBuilder.fill(0.5, 0.5, 1));
