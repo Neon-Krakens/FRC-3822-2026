@@ -339,11 +339,11 @@ public class Vision
     /**
      * Left Camera
      */
-    FRONT_CAM("Back_Camera",
+    BACK_CAM("Back_Camera",
              new Rotation3d(0, 0, 0),
-             new Translation3d(Units.inchesToMeters(12.056), // TODO: specify
-                               Units.inchesToMeters(10.981),
-                               Units.inchesToMeters(8.44)),
+             new Translation3d(Units.inchesToMeters(-13.75), // TODO: specify
+                               Units.inchesToMeters(-4.75),
+                               Units.inchesToMeters(14.187)),
              VecBuilder.fill(4, 4, 8), VecBuilder.fill(0.5, 0.5, 1));
     // /**
     //  * Right Camera
