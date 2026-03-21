@@ -48,7 +48,7 @@ public class RobotContainer
     Intake intake = new Intake();
 
     //Create a turret
-    Turret turret = new Turret();
+    public Turret turret = new Turret();
 
     //Create a actuator
     Actuator actuator = new Actuator();
