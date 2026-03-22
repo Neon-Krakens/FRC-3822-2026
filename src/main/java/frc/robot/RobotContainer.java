@@ -126,21 +126,22 @@ public class RobotContainer
         .whileTrue(Commands.parallel(agitator.funnelForward(), shooter.spinShooterIntake()))
         .onFalse(Commands.parallel(agitator.funnelStop(),shooter.stopShooterIntake()));
 
-      //Y = up Actuator
-      shooterXbox.y().onTrue(actuator.goUpCommand());
+      // //Y = up Actuator
+      // shooterXbox.y().onTrue(actuator.goUpCommand());
+      //
+      // //A = down Actuator
+      // shooterXbox.a().onTrue(actuator.goDownCommand());
 
-      //A = down Actuator
-      shooterXbox.a().onTrue(actuator.goDownCommand());
-
-      //Movement Left
-      shooterXbox.povLeft()
-        .whileTrue(Commands.run(() -> turret.testTurnLeft(), turret))
-        .onFalse(Commands.runOnce(() -> turret.stopTurret(), turret));
-
-      //Turret: Movement Right
-      shooterXbox.povRight()
-        .whileTrue(Commands.run(() -> turret.testTurnRight(), turret))
-        .onFalse(Commands.runOnce(() -> turret.stopTurret(), turret));
+      //TODO: add manual turret and shooter control mode
+      // //Movement Left
+      // shooterXbox.povLeft()
+      //   .whileTrue(Commands.run(() -> turret.testTurnLeft(), turret))
+      //   .onFalse(Commands.runOnce(() -> turret.stopTurret(), turret));
+      //
+      // //Turret: Movement Right
+      // shooterXbox.povRight()
+      //   .whileTrue(Commands.run(() -> turret.testTurnRight(), turret))
+      //   .onFalse(Commands.runOnce(() -> turret.stopTurret(), turret));
 
       //Agitator and shooter intake reverse
       shooterXbox.x()

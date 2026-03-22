@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.RelativeEncoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Turret extends SubsystemBase
 {
@@ -28,25 +29,21 @@ public class Turret extends SubsystemBase
         aimPID.setTolerance(.01);
     }
 
-    public void setTurretPower(double power)
+    public void setTurretPower(double power, double angle)
     {
         double position = getTurretAngle();
 
         //STOP if trying to go past left limit
-        if (position <= MIN_TURRET_POSITION && power < 0)
-        {
+        if (position <= MIN_TURRET_POSITION && power < 0) {
             turret.set(0.0);
-            return;
-        }
-
-        //STOP if trying to go past right limit
-        if (position >= MAX_TURRET_POSITION && power > 0)
-        {
+            SmartDashboard.putString("Turret Angle", "TOO CLOCKWISE, " + angle + " desired");
+        } else if (position >= MAX_TURRET_POSITION && power > 0) {
             turret.set(0.0);
-            return;
+            SmartDashboard.putString("Turret Angle", "TOO COUNTERCLOCKWISE, " + angle + " desired");
+        } else {
+            turret.set(MathUtil.clamp(power, -0.35, 0.35)); //TODO: evaluate clamp (motor can go to -1, 1)
+            SmartDashboard.putString("Turret Angle", "Good, " + position + " radians, " + angle + " desired");
         }
-        
-        turret.set(MathUtil.clamp(power, -0.35, 0.35)); //TODO: evaluate clamp (motor can go to -1, 1)
     }
 
     public void stopTurret()
@@ -54,20 +51,10 @@ public class Turret extends SubsystemBase
         turret.set(0.0);
     }
 
-        public void testTurnLeft()
-    {
-        setTurretPower(-0.15);
-    }
-
-    public void testTurnRight()
-    {
-        setTurretPower(0.15);
-    }
-
     public void aimAtTarget(double angle)
     {
         double output = aimPID.calculate(angle, 0.0);
-        setTurretPower(output);
+        setTurretPower(output, angle);
     }
 
     public boolean aimedAtTarget()

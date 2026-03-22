@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.swervedrive.Intake;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to each mode, as
@@ -91,7 +92,7 @@ public class Robot extends TimedRobot
     xv += -0.19685*rv*Math.sin(r+latency*rv); //add on velocity from angular velocity
     yv += 0.19685*rv*Math.cos(r+latency*rv);
 
-    System.out.println("Pose: xp: " + xp + ", yp: " + yp + ", xv:" + xv + ", yv: " + yv);
+    SmartDashboard.putString("Pose", "xp: " + xp + ", yp: " + yp + ", xv:" + xv + ", yv: " + yv);
     
     // position on field, 4.62534 meters X, 4.03479 meters Y
     Optional<Alliance> alliance = DriverStation.getAlliance()
@@ -127,13 +128,16 @@ public class Robot extends TimedRobot
     double edge_time = edge_distance/hv;
     double height_at_edge = slope*h_v_rel*edge_time-4.9*edge_time*edge_time;
     if(height_at_edge < edge_height) {
-      System.out.println("too close! " + (height_at_edge - edge_height) + " M under edge");
+      SmartDashboard.putString("Targeting","TOO CLOSE! " + (height_at_edge - edge_height) + " M under edge");
+    } else if(rpmFactor*velocity > 5800) {
+      SmartDashboard.putString("Targeting","TOO FAR! " + rpmFactor*velocity + " RPM wanted, probably not possible!");
     } else {
-      System.out.println("Targeting: shooting_velocity: " + velocity + ", shooting_dir: " + shooting_dir + ", " + (height_at_edge - edge_height) + " M over edge");
+      SmartDashboard.putString("Targeting","shooting_velocity: " + velocity + ", shooting_dir: " + shooting_dir + ", " + (height_at_edge - edge_height) + " M over edge");
     }
-    m_robotContainer.shooter.setRPM(rpmFactor*velocity);
-    m_robotContainer.turret.aimAtTarget(shooting_dir - r); //aimAtTarget neds to be called periodically or it could probably exceed limits!
 
+    m_robotContainer.shooter.setRPM(rpmFactor*velocity);
+    // sets angle to between -pi/2 and pi/2
+    m_robotContainer.turret.aimAtTarget((shooting_dir - r + 1.5708) % 3.14159265359 - 1.5708); //aimAtTarget neds to be called periodically or it could probably exceed limits!
 
   }
 
