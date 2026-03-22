@@ -39,7 +39,7 @@ public class RobotContainer
     public final SwerveSubsystem drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve/neo"));
 
     //Created a shooter
-    Shooter shooter = new Shooter();
+    public Shooter shooter = new Shooter();
 
     //Created a agitator
     Agitator agitator = new Agitator();
@@ -84,6 +84,8 @@ public class RobotContainer
       configureBindings();
 
       DriverStation.silenceJoystickConnectionWarning(true);
+
+      shooter.Initialize();
 
     }
 

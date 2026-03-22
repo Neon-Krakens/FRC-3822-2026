@@ -4,13 +4,39 @@ import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkPIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shooter extends SubsystemBase
 {
     //Motors
-    SparkMax shooterLeft = new SparkMax(12, MotorType.kBrushless);
-    SparkMax shooterRight = new SparkMax(13, MotorType.kBrushless);
-    SparkMax shooterIntake = new SparkMax(14, MotorType.kBrushless);
+    final SparkMax shooterLeft = new SparkMax(12, MotorType.kBrushless);
+    final SparkMax shooterRight = new SparkMax(13, MotorType.kBrushless);
+    final SparkMax shooterIntake = new SparkMax(14, MotorType.kBrushless);
+
+    //PID control
+    final SparkPIDController shooterPID;
+    final RelativeEncoder shooterEncoder; //only for logging/monitoring
+
+    public void Initialize() {
+        shooterPID = shooterLeft.getPIDController();
+        shooterEncoder = shooterLeft.getEncoder();
+
+        // set PID coefficients
+        shooterPID.setP(6e-5);
+        shooterPID.setI(0);
+        shooterPID.setD(0);
+        shooterPID.setIZone(0);
+        shooterPID.setFF(0.000015);
+        shooterPID.setOutputRange(-1, 1);
+    }
+
+    public void setRPM(setPoint) {
+        shooterPID.setReference(setPoint, CANSparkMax.ControlType.kVelocity);
+        SmartDashboard.putNumber("RPM", m_encoder.getVelocity());
+        SmartDashboard.putNumber("RPM Target", setPoint);
+    }
    
     //************************************************* Commands *************************************************/
     public Command spinShooterIntake()

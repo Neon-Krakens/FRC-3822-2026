@@ -104,6 +104,7 @@ public class Robot extends TimedRobot
 
 
     //shooting velocities
+    final double rpmFactor = 100;
     final double target_height = 1.8288;
     double target_distance = Math.sqrt((target_x-xp)*(target_x-xp)+(target_y-yp)*(target_y-yp));
     double x_target_dir = (target_x - xp)/target_distance;
@@ -130,6 +131,7 @@ public class Robot extends TimedRobot
     } else {
       System.out.println("Targeting: shooting_velocity: " + velocity + ", shooting_dir: " + shooting_dir + ", " + (height_at_edge - edge_height) + " M over edge");
     }
+    m_robotContainer.shooter.setRPM(rpmFactor*velocity);
     m_robotContainer.turret.aimAtTarget(shooting_dir); //aimAtTarget neds to be called periodically or it could probably exceed limits!
 
 
