@@ -59,17 +59,17 @@ public class RobotContainer
     public SwerveInputStream driveInputStream = SwerveInputStream.of(drivebase.getSwerveDrive(),
     () -> driverXbox.getLeftY() * 1,
     () -> driverXbox.getLeftX() * 1)
-      .withControllerHeadingAxis(() -> driverXbox.getRightX() * 1, () -> driverXbox.getRightY() * 1)
+      .withControllerHeadingAxis(() -> driverXbox.getRightX() * 1, () -> driverXbox.getRightY() * 1) //TODO: controllerrotationaxis for relative
       .deadband(Constants.OperatorConstants.DEADBAND)
       .scaleTranslation(0.5)
-      .allianceRelativeControl(true)
-      .headingWhile(true);
+      .allianceRelativeControl(false);
+      //.headingWhile(true);
       
-  //This is robot oriented driving. Don't touch it.
-    public SwerveInputStream driveDirectAngle = driveInputStream.copy()
-                        .withControllerHeadingAxis(() -> driverXbox.getRightX()*-1,
-                                        () -> driverXbox.getRightY()*-1)
-                        .headingWhile(true);
+  // //This is robot oriented driving. Don't touch it.
+  //   public SwerveInputStream driveDirectAngle = driveInputStream.copy()
+  //                       .withControllerHeadingAxis(() -> driverXbox.getRightX()*-1,
+  //                                       () -> driverXbox.getRightY()*-1)
+  //                       .headingWhile(true);
 
     /**
     * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -100,9 +100,9 @@ public class RobotContainer
 
       Command driveFieldOrientedAnglularVelocity = drivebase.driveFieldOriented(driveInputStream);
 
-      Command driveFieldOrientedDirectAngle = drivebase.driveFieldOriented(driveDirectAngle);
+      //Command driveFieldOrientedDirectAngle = drivebase.driveFieldOriented(driveDirectAngle);
      
-      drivebase.setDefaultCommand(driveFieldOrientedDirectAngle);
+      drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
 
       /****************************************************** Shooter Commands ******************************************************/
       //Top Shooter: Toggle On and Off
