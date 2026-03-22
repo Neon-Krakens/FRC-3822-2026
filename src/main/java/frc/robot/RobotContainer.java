@@ -107,7 +107,7 @@ public class RobotContainer
       /****************************************************** Shooter Commands ******************************************************/
       //Top Shooter: Toggle On and Off
       shooterXbox.rightBumper()
-        .toggleOnTrue(shooter.spinTopShooter());
+        .toggleOnTrue(shooter.enableTopShooter());
 
       //Intake: Toggle On and Off 
       shooterXbox.leftBumper()
