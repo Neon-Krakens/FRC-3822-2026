@@ -15,7 +15,7 @@ public class Shooter extends SubsystemBase
     final SparkMax shooterRight = new SparkMax(13, MotorType.kBrushless);
     final SparkMax shooterIntake = new SparkMax(14, MotorType.kBrushless);
 
-    //PID control
+    //PID control, see https://github.com/REVrobotics/SPARK-MAX-Examples/blob/b519a006fbc2ce769eaba191db442e59714e255a/Java/Velocity%20Closed%20Loop%20Control/src/main/java/frc/robot/Robot.java
     final SparkPIDController shooterPID;
     final RelativeEncoder shooterEncoder; //only for logging/monitoring
 
