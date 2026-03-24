@@ -6,12 +6,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.subsystems.swervedrive.Actuator;
-import frc.robot.subsystems.swervedrive.Agitator;
-import frc.robot.subsystems.swervedrive.Intake;
-import frc.robot.subsystems.swervedrive.Shooter;
+// import frc.robot.subsystems.swervedrive.Actuator;
+// import frc.robot.subsystems.swervedrive.Agitator;
+// import frc.robot.subsystems.swervedrive.Intake;
+// import frc.robot.subsystems.swervedrive.Shooter;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
-import frc.robot.subsystems.swervedrive.Turret;
+// import frc.robot.subsystems.swervedrive.Turret;
 
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.RadiansPerSecond;
@@ -37,20 +37,6 @@ public class RobotContainer
     //The robot's subsystems and commands are defined here...
     public final SwerveSubsystem drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve/neo"));
 
-    //Created a shooter
-    public Shooter shooter = new Shooter();
-
-    //Created a agitator
-    Agitator agitator = new Agitator();
-
-    //Create a intake
-    Intake intake = new Intake();
-
-    //Create a turret
-    public Turret turret = new Turret();
-
-    //Create a actuator
-    Actuator actuator = new Actuator();
 
     /**
     * Converts driver input into a field-relative ChassisSpeeds that is controlled by angular velocity.
@@ -83,14 +69,10 @@ public class RobotContainer
       configureBindings();
 
       DriverStation.silenceJoystickConnectionWarning(true);
-
-      shooter.Initialize();
-
     }
 
     private void setupPathPlannerCommands()
     {
-      NamedCommands.registerCommand("Final Open Intake", intake.foldOpenIntake());
     }
 
    private void configureBindings()
@@ -105,26 +87,6 @@ public class RobotContainer
 
       /****************************************************** Shooter Commands ******************************************************/
       //Top Shooter: Toggle On and Off
-      shooterXbox.rightBumper()
-        .toggleOnTrue(shooter.enableTopShooter());
-
-      //Intake: Toggle On and Off 
-      shooterXbox.leftBumper()
-        .toggleOnTrue(intake.spinIntakeForward());
-
-      //Open intake
-      shooterXbox.povDown()
-        .whileTrue((intake.foldOpenIntake()));
-
-      //Close intake
-      shooterXbox.povUp()
-        .whileTrue(intake.foldCloseIntake());
-
-        //Shoot: Hold R2
-      shooterXbox.rightTrigger()
-        .whileTrue(Commands.parallel(agitator.funnelForward(), shooter.spinShooterIntake()))
-        .onFalse(Commands.parallel(agitator.funnelStop(),shooter.stopShooterIntake()));
-
       // //Y = up Actuator
       // shooterXbox.y().onTrue(actuator.goUpCommand());
       //

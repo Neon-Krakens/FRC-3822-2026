@@ -330,37 +330,21 @@ public class Vision
     field2d.getObject("tracked targets").setPoses(poses);
   }
 
-  //In the case that any of this goes wrong delete line 333-346
-    public boolean hasTarget()
-  {
-    return Cameras.BACK_CAM.getLatestResult()
-        .map(PhotonPipelineResult::hasTargets)
-        .orElse(false);
-  }
-
-  public double getTargetYaw()
-  {
-    return Cameras.BACK_CAM.getLatestResult()
-        .filter(PhotonPipelineResult::hasTargets)
-        .map(result -> result.getBestTarget().getYaw())
-        .orElse(0.0);
-  }
-
   /**
    * Camera Enum to select each camera
    */
   enum Cameras
-  {
+  {;
     /**
      * Left Camera
      */
-    BACK_CAM("Back_Camera",
-             new Rotation3d(0, 0, 0),
-             new Translation3d(Units.inchesToMeters(-13.75),
-                               Units.inchesToMeters(-4.75),
-                               Units.inchesToMeters(14.187)),
-             VecBuilder.fill(4, 4, 8), VecBuilder.fill(0.5, 0.5, 1));
-    // /**
+    // BACK_CAM("Back_Camera",
+    //          new Rotation3d(0, 0, 0),
+    //          new Translation3d(Units.inchesToMeters(-13.75),
+    //                            Units.inchesToMeters(-4.75),
+    //                            Units.inchesToMeters(14.187)),
+    //          VecBuilder.fill(4, 4, 8), VecBuilder.fill(0.5, 0.5, 1));
+    // // /**
     //  * Right Camera
     //  */
     // RIGHT_CAM("right",
