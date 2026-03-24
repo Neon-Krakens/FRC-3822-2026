@@ -26,10 +26,10 @@ public class Shooter extends SubsystemBase
     final SparkMax shooterIntake = new SparkMax(14, MotorType.kBrushless);
 
     //PID control, see https://github.com/REVrobotics/REVLib-Examples/blob/main/Java/SPARK/Closed%20Loop%20Control/src/main/java/frc/robot/Robot.java
-    final SparkClosedLoopController shooterController;
-    final SparkMaxConfig shooterConfig;
-    final SparkMaxConfig shooterRightConfig;
-    final RelativeEncoder shooterEncoder; //only for logging/monitoring
+    SparkClosedLoopController shooterController;
+    SparkMaxConfig shooterConfig;
+    SparkMaxConfig shooterRightConfig;
+    RelativeEncoder shooterEncoder; //only for logging/monitoring
 
     public void Initialize() {
         shooterController = shooterLeft.getClosedLoopController();
@@ -54,14 +54,14 @@ public class Shooter extends SubsystemBase
         shooterRight.configure(shooterRightConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
     }
 
-    public void setRPM(setPoint) {
+    public void setRPM(double setPoint) {
         if (enabled) {
             shooterController.setSetpoint(setPoint, ControlType.kVelocity, ClosedLoopSlot.kSlot0);
         } else {
             shooterController.setSetpoint(0, ControlType.kVelocity, ClosedLoopSlot.kSlot0);
         }
 
-        SmartDashboard.putNumber("RPM", m_encoder.getVelocity());
+        SmartDashboard.putNumber("RPM", shooterEncoder.getVelocity());
         SmartDashboard.putNumber("RPM Target", setPoint);
     }
    

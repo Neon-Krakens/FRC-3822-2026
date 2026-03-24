@@ -20,7 +20,6 @@ import java.io.File;
 import com.pathplanner.lib.auto.NamedCommands;
 import swervelib.SwerveInputStream;
 import frc.robot.subsystems.swervedrive.Vision;
-import frc.robot.commands.swervedrive.AimTurretCommand;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 /**
@@ -143,10 +142,11 @@ public class RobotContainer
       //   .whileTrue(Commands.run(() -> turret.testTurnRight(), turret))
       //   .onFalse(Commands.runOnce(() -> turret.stopTurret(), turret));
 
+      //TODO: reimplement shooter reverse
       //Agitator and shooter intake reverse
-      shooterXbox.x()
-        .whileTrue(Commands.parallel(agitator.funnelReverse(), shooter.shooterIntakeReverse()))
-        .onFalse(Commands.parallel(agitator.funnelStop(), shooter.stopShooterIntake()));
+      //shooterXbox.x()
+      //  .whileTrue(Commands.parallel(agitator.funnelReverse(), shooter.shooterIntakeReverse()))
+      //  .onFalse(Commands.parallel(agitator.funnelStop(), shooter.stopShooterIntake()));
 
         
       /****************************************************************************************************************************/

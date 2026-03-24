@@ -333,14 +333,14 @@ public class Vision
   //In the case that any of this goes wrong delete line 333-346
     public boolean hasTarget()
   {
-    return Cameras.CENTER_CAM.getLatestResult()
+    return Cameras.BACK_CAM.getLatestResult()
         .map(PhotonPipelineResult::hasTargets)
         .orElse(false);
   }
 
   public double getTargetYaw()
   {
-    return Cameras.CENTER_CAM.getLatestResult()
+    return Cameras.BACK_CAM.getLatestResult()
         .filter(PhotonPipelineResult::hasTargets)
         .map(result -> result.getBestTarget().getYaw())
         .orElse(0.0);

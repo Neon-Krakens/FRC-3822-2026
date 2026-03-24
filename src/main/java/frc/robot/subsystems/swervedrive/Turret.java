@@ -22,7 +22,7 @@ public class Turret extends SubsystemBase
     private static final double MAX_TURRET_POSITION = 0.55;
 
     //PID for aiming
-    private final PIDController aimPID = new PIDController(0.02, 0.0, 0.0);
+    private final PIDController aimPID = new PIDController(0.0002, 0.0, 0.0);
 
      public Turret()
     {

@@ -2,7 +2,6 @@ package frc.robot;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
@@ -10,6 +9,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.swervedrive.Intake;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import java.util.Optional;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to each mode, as
@@ -95,11 +96,12 @@ public class Robot extends TimedRobot
     SmartDashboard.putString("Pose", "xp: " + xp + ", yp: " + yp + ", xv:" + xv + ", yv: " + yv);
     
     // position on field, 4.62534 meters X, 4.03479 meters Y
-    Optional<Alliance> alliance = DriverStation.getAlliance()
-    if (alliance.isPresent() && alliance.get() == Alliance.red()) {
-      final double target_x = 11.91466;
+    Optional<Alliance> alliance = DriverStation.getAlliance();
+    final double target_x;
+    if (alliance.isPresent() && alliance.get() == Alliance.Red) {
+      target_x = 11.91466;
     } else {
-      final double target_x = 4.62534;
+      target_x = 4.62534;
     }
     final double target_y = 4.03479;
 
