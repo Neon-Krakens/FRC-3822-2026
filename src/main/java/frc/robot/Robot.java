@@ -81,7 +81,7 @@ public class Robot extends TimedRobot
     CommandScheduler.getInstance().run();
 
     final double latency = .5; //seconds from signal to shoot to exit of ball. Probably this whole section of code should be run once to move motors and a second time after to see if correct, or if further adjustments are needed
-    final double slope = 2.646; //tan(shooting angle)
+    final double slope = 2.3298; //tan(shooting angle)
 
     //robot pos, assumes rotational and angular velocity remains constant
     double r = m_robotContainer.drivebase.swerveDrive.getPose().getRotation().getRadians();
